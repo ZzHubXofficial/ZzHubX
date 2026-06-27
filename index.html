@@ -375,30 +375,48 @@
 <div class="toast" id="toast">✅ تم نسخ السكربت!</div>
 
 <script>
-// ── Storage keys ──
-const VISIT_KEY = 'zzHubX_visits';
-const COPY_KEY  = 'zzHubX_copies';
+// ── Firebase Config ──
+// 1) روح https://console.firebase.google.com
+// 2) أنشئ مشروع جديد
+// 3) Realtime Database → أنشئ قاعدة بيانات (Test mode)
+// 4) حط رابط قاعدة بياناتك هنا ⬇️
+const FB_URL = 'https://zzhubxofficial-default-rtdb.firebaseio.com';
 
-// ── Count visits ──
+async function fbGet(path) {
+  const r = await fetch(`${FB_URL}/${path}.json`);
+  return await r.json();
+}
+
+async function fbSet(path, val) {
+  await fetch(`${FB_URL}/${path}.json`, {
+    method: 'PUT',
+    body: JSON.stringify(val)
+  });
+}
+
+async function fbIncrement(path) {
+  const cur = (await fbGet(path)) || 0;
+  const next = cur + 1;
+  await fbSet(path, next);
+  return next;
+}
+
+// ── Load counts on start ──
 (async () => {
   try {
-    let visits = parseInt((await window.storage.get(VISIT_KEY))?.value || '0') + 1;
-    await window.storage.set(VISIT_KEY, String(visits), true);
+    const visits = await fbIncrement('stats/visits');
     animateCount('visit-count', visits);
-  } catch {
-    animateCount('visit-count', 1);
-  }
+  } catch { animateCount('visit-count', '—'); }
 
   try {
-    let copies = parseInt((await window.storage.get(COPY_KEY, true))?.value || '0');
+    const copies = (await fbGet('stats/copies')) || 0;
     animateCount('copy-count', copies);
-  } catch {
-    animateCount('copy-count', 0);
-  }
+  } catch { animateCount('copy-count', '—'); }
 })();
 
 function animateCount(id, target) {
   const el = document.getElementById(id);
+  if (target === '—') { el.textContent = '—'; return; }
   let current = 0;
   const step = Math.ceil(target / 40);
   const timer = setInterval(() => {
@@ -421,10 +439,9 @@ async function copyScript() {
     document.body.removeChild(ta);
   }
 
-  // Update copy count
+  // Increment copy count in Firebase
   try {
-    let copies = parseInt((await window.storage.get(COPY_KEY, true))?.value || '0') + 1;
-    await window.storage.set(COPY_KEY, String(copies), true);
+    const copies = await fbIncrement('stats/copies');
     document.getElementById('copy-count').textContent = copies.toLocaleString();
   } catch {}
 
@@ -511,4 +528,3 @@ loop();
 </script>
 </body>
 </html>
-
