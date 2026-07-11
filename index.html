@@ -342,25 +342,60 @@
     <div class="divider"></div>
   </section>
 
-  <!-- Script Card -->
+  <!-- Script Cards Container -->
   <div class="card-wrap">
+    
+    <!-- First Script Card: AUTO CLICKER V2 -->
     <div class="script-card">
-
       <div class="card-topbar">
         <span class="dot dot-r"></span>
         <span class="dot dot-y"></span>
         <span class="dot dot-g"></span>
-        <span class="card-label">ZzHubX — Script</span>
+        <span class="card-label">ZzHubX — Script #1</span>
       </div>
 
       <div class="script-body" id="script-content"><span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://raw.githubusercontent.com/OPonTOP1/SCRIPTS/refs/heads/main/AUTO%20CLICKER%20V2"</span>))()</div>
 
       <div class="card-footer">
         <span class="copy-meta">📁 AUTO CLICKER V2 &nbsp;|&nbsp; 🔒 Verified</span>
-        <button class="btn-copy" id="copyBtn" onclick="copyScript()">
-          <span id="btn-icon">📋</span>
-          <span id="btn-text">نسخ السكربت</span>
+        <button class="btn-copy" id="copyBtn1" onclick="copyScript(1)">
+          <span id="btn-icon-1">📋</span>
+          <span id="btn-text-1">نسخ السكربت</span>
         </button>
+      </div>
+    </div>
+
+    <div style="margin: 32px 0;"></div>
+
+    <!-- Second Script Card: INSTANT 5 UGC -->
+    <div class="script-card">
+      <div class="card-topbar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="card-label">ZzHubX — Script #2</span>
+      </div>
+
+      <div class="script-body" id="script-content-2"><span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://raw.githubusercontent.com/ZzHubXofficial/ZzHubX-1.1/refs/heads/main/RIA%2025"</span>))()</div>
+
+      <div class="card-footer">
+        <span class="copy-meta">📁 INSTANT 5 UGC &nbsp;|&nbsp; 🔒 Verified</span>
+        <button class="btn-copy" id="copyBtn2" onclick="copyScript(2)">
+          <span id="btn-icon-2">📋</span>
+          <span id="btn-text-2">نسخ السكربت</span>
+        </button>
+      </div>
+
+      <!-- Script Info Section -->
+      <div style="background: var(--bg-panel); border-top: 1px solid var(--silver-4); padding: 20px 28px; font-size: 0.9rem; line-height: 1.7; color: var(--silver-2);">
+        <p style="color: var(--orange); font-weight: 700; margin-bottom: 12px;">📖 طريقة الاستخدام:</p>
+        <ol style="margin-right: 20px;">
+          <li style="margin-bottom: 8px;">ادخل الماب من هنا: <a href="https://www.roblox.com/games/113939391927202/Roblox-Innovation-Awards-2025-Voting-Hub" target="_blank" style="color: var(--orange); text-decoration: none; font-weight: 700;">🎮 Roblox Innovation Awards 2025</a></li>
+          <li style="margin-bottom: 8px;">انسخ السكربت وشغله في Executor</li>
+          <li style="margin-bottom: 8px;">راح تجيك نجوم ⭐ اخذها مباشرة</li>
+          <li style="margin-bottom: 8px;">اطلع من الماب وارجع ادخله كذا</li>
+          <li>راح تلقى جميع السكنات عندك في الخزانة الآن ✅</li>
+        </ol>
       </div>
 
     </div>
@@ -375,48 +410,30 @@
 <div class="toast" id="toast">✅ تم نسخ السكربت!</div>
 
 <script>
-// ── Firebase Config ──
-// 1) روح https://console.firebase.google.com
-// 2) أنشئ مشروع جديد
-// 3) Realtime Database → أنشئ قاعدة بيانات (Test mode)
-// 4) حط رابط قاعدة بياناتك هنا ⬇️
-const FB_URL = 'https://zzhubxofficial-default-rtdb.firebaseio.com';
+// ── Storage keys ──
+const VISIT_KEY = 'zzHubX_visits';
+const COPY_KEY  = 'zzHubX_copies';
 
-async function fbGet(path) {
-  const r = await fetch(`${FB_URL}/${path}.json`);
-  return await r.json();
-}
-
-async function fbSet(path, val) {
-  await fetch(`${FB_URL}/${path}.json`, {
-    method: 'PUT',
-    body: JSON.stringify(val)
-  });
-}
-
-async function fbIncrement(path) {
-  const cur = (await fbGet(path)) || 0;
-  const next = cur + 1;
-  await fbSet(path, next);
-  return next;
-}
-
-// ── Load counts on start ──
+// ── Count visits ──
 (async () => {
   try {
-    const visits = await fbIncrement('stats/visits');
+    let visits = parseInt((await window.storage.get(VISIT_KEY))?.value || '0') + 1;
+    await window.storage.set(VISIT_KEY, String(visits), true);
     animateCount('visit-count', visits);
-  } catch { animateCount('visit-count', '—'); }
+  } catch {
+    animateCount('visit-count', 1);
+  }
 
   try {
-    const copies = (await fbGet('stats/copies')) || 0;
+    let copies = parseInt((await window.storage.get(COPY_KEY, true))?.value || '0');
     animateCount('copy-count', copies);
-  } catch { animateCount('copy-count', '—'); }
+  } catch {
+    animateCount('copy-count', 0);
+  }
 })();
 
 function animateCount(id, target) {
   const el = document.getElementById(id);
-  if (target === '—') { el.textContent = '—'; return; }
   let current = 0;
   const step = Math.ceil(target / 40);
   const timer = setInterval(() => {
@@ -427,8 +444,14 @@ function animateCount(id, target) {
 }
 
 // ── Copy script ──
-async function copyScript() {
-  const raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/OPonTOP1/SCRIPTS/refs/heads/main/AUTO%20CLICKER%20V2"))()`;
+async function copyScript(scriptNum = 1) {
+  let raw;
+  
+  if (scriptNum === 1) {
+    raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/OPonTOP1/SCRIPTS/refs/heads/main/AUTO%20CLICKER%20V2"))()`;
+  } else if (scriptNum === 2) {
+    raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/ZzHubXofficial/ZzHubX-1.1/refs/heads/main/RIA%2025"))()`;
+  }
 
   try {
     await navigator.clipboard.writeText(raw);
@@ -439,16 +462,17 @@ async function copyScript() {
     document.body.removeChild(ta);
   }
 
-  // Increment copy count in Firebase
+  // Update copy count
   try {
-    const copies = await fbIncrement('stats/copies');
+    let copies = parseInt((await window.storage.get(COPY_KEY, true))?.value || '0') + 1;
+    await window.storage.set(COPY_KEY, String(copies), true);
     document.getElementById('copy-count').textContent = copies.toLocaleString();
   } catch {}
 
   // Button feedback
-  const btn  = document.getElementById('copyBtn');
-  const icon = document.getElementById('btn-icon');
-  const txt  = document.getElementById('btn-text');
+  const btn  = document.getElementById('copyBtn' + scriptNum);
+  const icon = document.getElementById('btn-icon-' + scriptNum);
+  const txt  = document.getElementById('btn-text-' + scriptNum);
   btn.classList.add('copied');
   icon.textContent = '✅'; txt.textContent = 'تم النسخ!';
   setTimeout(() => {
