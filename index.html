@@ -388,17 +388,53 @@
 
       <!-- Script Info Section -->
       <div style="background: var(--bg-panel); border-top: 1px solid var(--silver-4); padding: 20px 28px; font-size: 0.9rem; line-height: 1.7; color: var(--silver-2);">
-        <p style="color: var(--orange); font-weight: 700; margin-bottom: 12px;">📖 طريقة الاستخدام:</p>
+        <p style="color: var(--orange); font-weight: 700; margin-bottom: 12px;">طريقة الاستخدام:</p>
         <ol style="margin-right: 20px;">
-          <li style="margin-bottom: 8px;">ادخل الماب من هنا: <a href="https://www.roblox.com/games/113939391927202/Roblox-Innovation-Awards-2025-Voting-Hub" target="_blank" style="color: var(--orange); text-decoration: none; font-weight: 700;">🎮 Roblox Innovation Awards 2025</a></li>
+          <li style="margin-bottom: 8px;">ادخل الماب من هنا: <a href="https://www.roblox.com/games/113939391927202/Roblox-Innovation-Awards-2025-Voting-Hub" target="_blank" style="color: var(--orange); text-decoration: none; font-weight: 700;">Roblox Innovation Awards 2025</a></li>
           <li style="margin-bottom: 8px;">انسخ السكربت وشغله في Executor</li>
-          <li style="margin-bottom: 8px;">راح تجيك نجوم ⭐ اخذها مباشرة</li>
+          <li style="margin-bottom: 8px;">راح تجيك نجوم اخذها مباشرة</li>
           <li style="margin-bottom: 8px;">اطلع من الماب وارجع ادخله كذا</li>
-          <li>راح تلقى جميع السكنات عندك في الخزانة الآن ✅</li>
+          <li>راح تلقى جميع السكنات عندك في الخزانة الآن</li>
         </ol>
       </div>
 
     </div>
+
+    <div style="margin: 32px 0;"></div>
+
+    <!-- Third Script Card: INSTANT 5 UGC -->
+    <div class="script-card">
+      <div class="card-topbar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="card-label">ZzHubX — Script #3</span>
+      </div>
+
+      <div class="script-body" id="script-content-3"><span class="fn">loadstring</span>(<span class="fn">game</span>:<span class="fn">HttpGet</span>(<span class="str">"https://raw.githubusercontent.com/ZzHubXofficial/ZzHubX-1.1/refs/heads/main/RIA%2026"</span>))()</div>
+
+      <div class="card-footer">
+        <span class="copy-meta">📁 INSTANT 5 UGC &nbsp;|&nbsp; 🔒 Verified</span>
+        <button class="btn-copy" id="copyBtn3" onclick="copyScript(3)">
+          <span id="btn-icon-3">📋</span>
+          <span id="btn-text-3">نسخ السكربت</span>
+        </button>
+      </div>
+
+      <!-- Script Info Section -->
+      <div style="background: var(--bg-panel); border-top: 1px solid var(--silver-4); padding: 20px 28px; font-size: 0.9rem; line-height: 1.7; color: var(--silver-2);">
+        <p style="color: var(--orange); font-weight: 700; margin-bottom: 12px;">طريقة الاستخدام:</p>
+        <ol style="margin-right: 20px;">
+          <li style="margin-bottom: 8px;">ادخل ماب ذا: <a href="https://www.roblox.com/games/95047916580305/The-Block" target="_blank" style="color: var(--orange); text-decoration: none; font-weight: 700;">The Block</a></li>
+          <li style="margin-bottom: 8px;">شغل السكربت</li>
+          <li style="margin-bottom: 8px;">انتظار لين يخلص</li>
+          <li style="margin-bottom: 8px;">بعده ينقلك لي ماب ثاني اطلع منه وا ارجع لي ماب الأول الي هو ذا: <a href="https://www.roblox.com/games/95047916580305/The-Block" target="_blank" style="color: var(--orange); text-decoration: none; font-weight: 700;">The Block</a></li>
+          <li>وبس كذا تجيك كل السكنات سهل</li>
+        </ol>
+      </div>
+
+    </div>
+
   </div>
 
   <!-- Footer -->
@@ -407,7 +443,7 @@
 </div>
 
 <!-- Toast -->
-<div class="toast" id="toast">✅ تم نسخ السكربت!</div>
+<div class="toast" id="toast">تم نسخ السكربت!</div>
 
 <script>
 // ── Storage keys ──
@@ -448,9 +484,11 @@ async function copyScript(scriptNum = 1) {
   let raw;
   
   if (scriptNum === 1) {
-    raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/OPonTOP1/SCRIPTS/refs/heads/main/AUTO%20CLICKER%20V2"))()`;
+    raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/OPonTOP1/SCRIPTS/refs/heads/main/AUTO CLICKER V2"))()`;
   } else if (scriptNum === 2) {
     raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/ZzHubXofficial/ZzHubX-1.1/refs/heads/main/RIA 25"))()`;
+  } else if (scriptNum === 3) {
+    raw = `loadstring(game:HttpGet("https://raw.githubusercontent.com/ZzHubXofficial/ZzHubX-1.1/refs/heads/main/RIA 26"))()`;
   }
 
   try {
